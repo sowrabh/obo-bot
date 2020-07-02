@@ -60,6 +60,19 @@ class BotActivityHandler extends TeamsActivityHandler {
         this.handleTeamsMessagingExtensionSubmitAction = handleTeamsMessagingExtensionSubmitAction;
     }
 
+    onInvokeActivity(_context) {
+        console.log("Sowrabh - Hello");
+        let card = createACV2Card();
+        return {
+            status: 200,
+            body: {
+                statusCode: 200,
+                type: "application/vnd.microsoft.card.adaptive",
+                value: card.content
+            }
+        };
+    }
+
     /* Conversation Bot */
     /**
      * Say hello and @ mention the current user.
@@ -103,7 +116,7 @@ class BotActivityHandler extends TeamsActivityHandler {
         */
         switch (action.commandId) {
         case 'createCard':
-            const card = createACV2Card() ;
+            const card = createACV2Card();
             await context.sendActivity({
                   attachments: [ card ],
                   channelData:{
@@ -160,7 +173,7 @@ class BotActivityHandler extends TeamsActivityHandler {
               ],
               "actions": [
                 {
-                  "type": "Action.Submit",
+                  "type": "Action.Execute",
                   "title": "Execute action",
                   "fallback": "drop",
                   "style": "positive",
